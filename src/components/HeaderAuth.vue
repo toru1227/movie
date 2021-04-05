@@ -4,21 +4,27 @@
      <img class="logo" src="../assets/movie-logo.png" @click="$router.push('/')">
    </div>
    <div class="right">
-     <p v-if="active" @click="$store.dispatch('/logout')">ログアウトする</p>
-     <div  v-else>
+     <div v-if="active">
+       <p>ようこそ{{$store.state.user.name}}さん</p>
+     <p @click="$store.dispatch('logout')">ログアウトする</p>
+   </div>
+      <div v-else>
      <p @click="$router.push('/signup')">新規登録</p>
      <p @click="$router.push('/login')">ログイン</p>
-     </div>
-     </div>
+      </div>
+    </div>
    </div>
 </template>
 <script>
 export default {
 data(){
   return {
-    active:true,
-  }
-}
+    active:""
+  };
+ },
+ created:function(){
+   this.active=this.$store.state.user
+ }
 }
 </script>
 
@@ -27,7 +33,7 @@ data(){
  align-items: center;
 }
 .right p {
-padding-top:30%;
+padding-top:25px;
  cursor: pointer;
  font-size:20px;
 }

@@ -2,8 +2,6 @@
   <div>
     <HeaderAuth/>
     <div class="form">
-      <p>:タイトル</p>
-    <input type="text" placeholder="タイトル" name="title">
      <p>:レビュー</p>
     <textarea name="review" id="" cols="30" rows="10"></textarea>
     <p>:点数</p>

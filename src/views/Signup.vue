@@ -1,26 +1,50 @@
 <template>
   <div>
     <HeaderAuth/>
-
     <div class="card">
        <p class="card-title">新規登録</p>
    <div class="form">
-    <input type="text" placeholder="ユーザーネーム">
-    <input type="text" placeholder="プロフィール">
-    <input type="email" placeholder="メールアドレス">
-    <input type="password" placeholder="パスワード">
+    <input type="text" placeholder="ユーザーネーム" v-model="name">
+    <input type="email" placeholder="メールアドレス" v-model="email">
+    <input type="password" placeholder="パスワード" v-model="password">
     <button @click="auth">新規登録</button>
    </div>
  </div>
   </div>
 </template>
 <script>
+import axios from "axios";
 import HeaderAuth from "../components/HeaderAuth"
 export default{
+  data(){
+    return {
+      name:"",
+      email:"",
+      password:""
+    };
+  },
   components:{
     HeaderAuth
+  },
+  methods:{
+    auth(){
+      axios
+      .post('https://young-castle-26834.herokuapp.com/api/signup',{
+        name:this.name,
+        profile:this.profile,
+        email:this.email,
+        password:this.password
+      })
+      .then(response=>{
+      console.log(response);
+      this.$router.replace("/");
+      })
+      .catch(error=>{
+        alert(error);
+      });
+    }
   }
-}
+};
 </script>
 <style scoped>
 button {

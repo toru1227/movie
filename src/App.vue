@@ -105,7 +105,7 @@ html {
   background-color: #f0f0f0;
 }
 * {
-  color: #333333
+  color: #414b5b
   ;
   font-family: "Noto Sans JP";
 }

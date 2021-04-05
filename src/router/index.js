@@ -4,8 +4,9 @@ import VueRouter from 'vue-router'
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Home from "../views/Home.vue";
-import Detail from "../views/Detail.vue";
+import Review from "../views/Review.vue";
 import Post from "../views/Post.vue";
+// import store from "../store/index";
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,13 +22,13 @@ component:Home
   },
   {
     path: '/signup',
-    name: 'Signup',
+    name: 'signup',
     component:Signup
   },
   {
-    path: "/detail/:id",
-    name: 'detail',
-    component: Detail,
+    path: "/review/:id",
+    name: 'review',
+    component: Review,
     props: true,
   },
   {
@@ -44,4 +45,4 @@ const router = new VueRouter({
   routes
 })
 
-export default router
+export default router;
