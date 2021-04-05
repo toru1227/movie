@@ -6,7 +6,7 @@
    <div class="right">
      <div v-if="active">
        <p>ようこそ{{$store.state.user.name}}さん</p>
-     <p @click="$store.dispatch('logout')">ログアウトする</p>
+     <p @click="$store.dispatch('logout'),logout()">ログアウトする</p>
    </div>
       <div v-else>
      <p @click="$router.push('/signup')">新規登録</p>
@@ -21,6 +21,11 @@ data(){
   return {
     active:""
   };
+ },
+ methods:{
+   logout(){
+     this.active=false
+   }
  },
  created:function(){
    this.active=this.$store.state.user
