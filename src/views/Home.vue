@@ -2,7 +2,14 @@
   <div class="home">
 <HeaderAuth/>
 <h1>現在上映中の映画</h1>
+<p>{{this.$store.state.user.id}}</p>
  <ul v-for="(value,index) in shares" :key="index">
+    <li class ="post" @click="
+    $router.push({
+      path:'/post/'+1,
+      params:{id:1}
+    })
+    ">レビューを投稿する</li>
      <li class="title">{{value.title}}</li>
      <li class="point">:平均点()</li>
    </ul>
@@ -15,6 +22,9 @@ export default{
   data(){
     return{
       shares:[
+        {title:"映画のタイトル",
+        point:4
+        }
       ]
     };
   },
@@ -36,9 +46,10 @@ export default{
 };
 </script>
 <style scoped>
+
 .title {
   font-size:20px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 color:#414b5b;
 }
 .home ul{
@@ -52,8 +63,7 @@ color:#414b5b;
 
 }
 .post{
-margin:20px;
-padding:10px;
+padding-bottom:10px;
 font-size:20px;
 }
 h1{

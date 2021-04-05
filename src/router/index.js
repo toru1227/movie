@@ -32,10 +32,10 @@ component:Home
     props: true,
   },
   {
-    path: "/post",
+    path: "/post/:id",
     name: "post",
     component: Post,
-
+    props:true
   }
 ]
 
