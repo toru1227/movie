@@ -29,7 +29,7 @@ export default{
   methods:{
     auth(){
       axios
-      .post('https://young-castle-26834.herokuapp.com/api/signup',{
+      .post('https://intense-falls-67346.herokuapp.com/api/signup',{
         name:this.name,
         profile:this.profile,
         email:this.email,

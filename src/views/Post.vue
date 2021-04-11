@@ -38,9 +38,9 @@ export default {
   methods:{
     send(){
       axios
-      .post("https://young-castle-26834.herokuapp.com/api/review",
+      .post("https://intense-falls-67346.herokuapp.com/api/review",
       {
-       content:this.content,
+        content:this.content,
         point:this.point,
         movie_id:this.id,
         user_id:this.$store.state.user.id
