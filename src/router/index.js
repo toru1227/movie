@@ -6,6 +6,8 @@ import Signup from "../views/Signup.vue";
 import Home from "../views/Home.vue";
 import Review from "../views/Review.vue";
 import Post from "../views/Post.vue";
+import User_review from "../views/User_review.vue";
+import Edit from "../views/Edit.vue";
 // import store from "../store/index";
 Vue.use(VueRouter)
 
@@ -35,6 +37,18 @@ component:Home
     path: "/post/:id",
     name: "post",
     component: Post,
+    props:true
+  },
+  {
+    path: "/user_review/:id",
+    name: "user_review",
+    component: User_review,
+    props: true
+  },
+  {
+    path: "/edit/id:",
+    name: "edit",
+    component: Edit,
     props:true
   }
 ]
