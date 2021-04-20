@@ -8,6 +8,7 @@ import Review from "../views/Review.vue";
 import Post from "../views/Post.vue";
 import User_review from "../views/User_review.vue";
 import Edit from "../views/Edit.vue";
+import Empty from "../views/Empty.vue";
 // import store from "../store/index";
 Vue.use(VueRouter)
 
@@ -46,10 +47,16 @@ component:Home
     props: true
   },
   {
-    path: "/edit/id:",
+    path: "/edit/:id",
     name: "edit",
     component: Edit,
     props:true
+  },
+  {
+    path: "/empty",
+    name: "empty",
+    component: Empty,
+
   }
 ]
 

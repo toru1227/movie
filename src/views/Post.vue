@@ -63,6 +63,7 @@ input {
 textarea{
   width:100%;
     margin-bottom:20px;
+    padding:10px;
 }
 p{
   padding-bottom:10px;

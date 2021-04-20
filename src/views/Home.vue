@@ -4,17 +4,14 @@
 <h1>現在上映中の映画</h1>
 
 <div class="flex">
-  <p>{{this.$store.state.user.id}}
-  </p>
 <div class="profile">
   <div v-if="login">
   <p class="profile-text">プロフィール</p>
-  <p>{{this.$store.state.user.id}}</p>
   <p class="reveiws" @click="$router.push
   ({
-   path:'/user_review/'+ this.$store.state.user.id,
-   params:{id:this.$store.state.user.id}
-  })">投稿一覧</p>
+   path:'/user_review/'+ $store.state.user.id,
+   params:{id:$store.state.user.id}
+  })">投稿一覧を見る</p>
   </div>
     <div v-else>
      <p class="profile-signup" @click="$router.push('/signup')">新規登録</p>

@@ -2,7 +2,6 @@
 <div>
   <HeaderAuth/>
  <div class="main">
-   <!-- <p>{{this.id}}</p> -->
    <p>{{this.$store.state.user.id}}</p>
   <div v-for="(review,index) in reviews" :key="index">
   <article>
@@ -12,20 +11,22 @@
    <button class="edit"
    @click="$router.push
    ({
-     path:'/edit',
+     path:'/edit/'+review.id,
      params:{id:review.id}
    })"
    >編集する</button>
+   <button class="delete" @click="del(review.id)"><span class="delete-color">削除する</span></button>
    </article>
   </div>
  </div>
 </div>
 </template>
 <script>
+import router from "../router/index";
 import axios from "axios";
 import HeaderAuth from "../components/HeaderAuth";
 export default{
-  // props:["id"],
+  props:["id"],
   data(){
     return {
    path:true,
@@ -36,10 +37,24 @@ methods:{
 async getShares(){
 let data=[];
 const reviews= await axios.get(
-"https://intense-falls-67346.herokuapp.com/api/user_review?id="+4);
+"https://intense-falls-67346.herokuapp.com/api/user_review?id="+this.$store.state.user.id);
  data.push(reviews.data.data);
+if(data[0].length<1){
+  router.push('/empty');
+}
  this.reviews=data[0];
  console.log(this.reviews);
+  },
+  del(index){
+    axios({
+      method:"delete",
+      url:"https://intense-falls-67346.herokuapp.com/api/review/delete",
+      data:{
+        id:index
+      },
+    }).then(()=>{
+      router.push('/');
+    });
   }
 },
  pointColor(point){
@@ -85,8 +100,8 @@ article{
   font-size: 15px;
 }
 .day{
-  font-size: 12px;
-  padding-bottom: 10px;
+  font-size: 16px;
+  padding-bottom: 100px;
 }
 .point {
   padding-bottom: 20px;
@@ -96,8 +111,24 @@ article{
   padding-bottom:5px;
 }
 button {
+  border-radius: 2px;
+  display: block;
   background-color: #fff;
   border:1px solid;
+   width:15%;
+  text-align: center;
+  font-size: 16px;
+  padding:5px 0;
+  opacity:0.4
+}
+button:hover{
+opacity:10;
+}
+.edit {
+margin-bottom: 10px;
+}
+.delete-color{
+  color:red;
 }
 .red {
   color:red
