@@ -1,6 +1,5 @@
 <template>
 <div>
-  <HeaderAuth/>
  <div class="main">
    <p>{{id}}</p>
    <p>{{this.$store.state.user.id}}</p>
@@ -21,9 +20,7 @@
 </template>
 <script>
 import axios from "axios";
-import HeaderAuth from "../components/HeaderAuth";
 export default{
-
   props:["id"],
   data(){
     return {
@@ -38,7 +35,7 @@ const reviews= await axios.get(
 "https://intense-falls-67346.herokuapp.com/api/review/show?id="+this.id)
  data.push(reviews.data.data);
  this.reviews=data[0];
-//  console.log(this.reviews);
+ console.log(this.reviews);
   },
 
 fav(index){
@@ -90,9 +87,6 @@ axios
     }
    }
 },
-  components:{
-    HeaderAuth
-  },
   created(){
     this.getShares();
  }

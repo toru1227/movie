@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderAuth/>
+
     <div class="card">
        <p class="card-title">新規登録</p>
    <div class="form">
@@ -14,17 +14,14 @@
 </template>
 <script>
 import axios from "axios";
-import HeaderAuth from "../components/HeaderAuth"
 export default{
+  props:["id"],
   data(){
     return {
       name:"",
       email:"",
       password:""
     };
-  },
-  components:{
-    HeaderAuth
   },
   methods:{
     auth(){

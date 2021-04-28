@@ -1,13 +1,13 @@
 <template>
   <div>
-<HeaderAuth/>
 <h1>現在上映中の映画</h1>
-
+<p>{{$store.state.master_user}}</p>
 <div class="flex">
 <div class="profile">
   <div v-if="login">
   <p class="profile-text">プロフィール</p>
-  <p class="reveiws" @click="$router.push
+  <p v-if="this.reviews_length<1" class="reveiws" @click="$router.push('/empty')">投稿一覧を見る</p>
+  <p v-else class="reveiws" @click="$router.push
   ({
    path:'/user_review/'+ $store.state.user.id,
    params:{id:$store.state.user.id}
@@ -21,22 +21,25 @@
 </div>
 <div>
  <ul class="home" v-for="(value,index) in shares" :key="index">
-    <button @click="$router.push
+    <li><button @click="$router.push
       ({
         path:'/review/'+value.data.id,
         params:{id:value.data.id}
         })
         ">{{value.data.title}}のレビューを見る</button>
-
-     <li class="point">平均点:<span :class="averageColor(value.average)">{{value.average}}</span></li>
+      <li>
+        <li class="point">平均点:<span :class="averageColor(value.average)">{{value.average}}</span>
+        </li>
+        <li>
         <button v-if="login" @click="
-      $router.push({
+        $router.push({
         path:'/post/'+value.data.id,
         params:{id:value.data.id}
         })">レビューを投稿する</button>
-       <li v-if="!login">
+       <div v-else-if="!login">
        <button class="login" @click="$router.push('/login')">ログインしてレビューを投稿する</button>
       <button class="signup" @click="$router.push('/signup')">ユーザー登録してレビューを投稿する</button>
+      </div>
        </li>
    </ul>
    </div>
@@ -45,19 +48,19 @@
 </template>
 <script>
 import axios from 'axios';
-import HeaderAuth from "../components/HeaderAuth";
 export default{
   data(){
     return{
       user_id:this.$store.state.user.id,
       login:this.$store.state.auth,
+      reviews_length:"",
+      posteds:[],
+      user_review:[],
       shares:[
-      ]
+      ],
     };
   },
-  components:{
-    HeaderAuth
-  },
+
   methods:{
    averageColor(average){
     if(average<2.9){
@@ -71,12 +74,22 @@ export default{
     async getShares(){
       const sharesdata= await axios.get("https://intense-falls-67346.herokuapp.com/api"
       );
-    this.shares=sharesdata.data.data;
-    console.log(this.shares);
-    }
-  },
+  this.shares=sharesdata.data.data;
+    },
+
+async getUserReview(){
+let data=[];
+const reviews= await axios.get(
+"https://intense-falls-67346.herokuapp.com/api/user_review?id="+this.$store.state.user.id);
+ data.push(reviews.data.data);
+ this.reviews_length=data[0].length;
+ this.user_review=data[0];
+console.log(data);
+ }
+},
   created(){
-    this.getShares();
+  this.getShares(),
+  this.getUserReview()
   }
 };
 </script>
@@ -122,7 +135,7 @@ color:#414b5b;
 display: inline-block;
 }
 .profile {
-  width:30%;
+  width:35%;
    background-color: #fff;
    margin:0 20px;
    height: 100px;
@@ -170,5 +183,13 @@ color:#414b5b;
 }
 .flex{
   display: flex;
+}
+.edit,
+.delete{
+  display:block;
+}
+.delete:hover{
+  background-color:rgb(237, 73, 73);
+  opacity:0.6
 }
 </style>

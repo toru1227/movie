@@ -1,10 +1,9 @@
 <template>
 <div>
-<HeaderAuth/>
-
   <div class="card">
        <p class="card-title">ログイン</p>
    <div class="form">
+     <p class="error">{{error}}</p>
     <input type="email" placeholder="メールアドレス" v-model="email">
     <input type="password" placeholder="パスワード" v-model="password">
     <button @click="auth">ログイン</button>
@@ -13,16 +12,14 @@
 </div>
 </template>
 <script>
-import HeaderAuth from "../components/HeaderAuth.vue";
+// import axios from "axios";
 export default {
   data(){
     return {
       email:"",
       password:"",
+      error:""
     };
-  },
-  components:{
-    HeaderAuth
   },
   methods:{
     auth(){
@@ -30,6 +27,13 @@ export default {
         email:this.email,
         password:this.password
       });
+      if(this.email==="" || this.password==="" || this.$store.state.auth===false){
+        this.error="正しいメールアドレス、パスワードを入力してください"
+      }
+      if(this.$store.state.auth === true){
+        this.$router.push('/');
+        this.$router.go({path: '/', force: true})
+      }
     }
   }
 };
@@ -44,7 +48,11 @@ button {
   background-color:#00b7ff;
   color:#f0f0f0;
 }
-
+.error{
+  color:red;
+  font-size:14px;
+  padding-bottom: 4px;
+}
 .card {
   border:1px solid;
   border-radius: 5px;

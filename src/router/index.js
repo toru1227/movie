@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
@@ -9,28 +9,33 @@ import Post from "../views/Post.vue";
 import User_review from "../views/User_review.vue";
 import Edit from "../views/Edit.vue";
 import Empty from "../views/Empty.vue";
+import Posted from "../views/Posted.vue";
+import MasterLogin from "../views/MasterLogin.vue";
+import Movie_post from "../views/Movie_post.vue";
+import Master_main from "../views/Master_main.vue";
 // import store from "../store/index";
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-path: '/',
-name: "home",
-component:Home
+    path: "/",
+    name: "home",
+    component: Home,
+    meta: { title: "映画レビューサイト", desc: "映画のレビューサイトです" },
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
+    path: "/login",
+    name: "login",
+    component: Login,
   },
   {
-    path: '/signup',
-    name: 'signup',
-    component:Signup
+    path: "/signup",
+    name: "signup",
+    component: Signup,
   },
   {
     path: "/review/:id",
-    name: 'review',
+    name: "review",
     component: Review,
     props: true,
   },
@@ -38,32 +43,53 @@ component:Home
     path: "/post/:id",
     name: "post",
     component: Post,
-    props:true
+    props: true,
   },
   {
     path: "/user_review/:id",
     name: "user_review",
     component: User_review,
-    props: true
+    props: true,
   },
   {
     path: "/edit/:id",
     name: "edit",
     component: Edit,
-    props:true
+    props: true,
+  },
+  {
+    path: "/posted/:id",
+    name: "posted",
+    component: Posted,
+    props: true,
   },
   {
     path: "/empty",
     name: "empty",
     component: Empty,
+  },
+  {
+    path: "/master_login",
+    name: "MasterLogin",
+    component: MasterLogin,
+  },
+  {
+    path: "/master_main",
+    name: "master_main",
+    component: Master_main,
+  },
+  {
+    path: "/movie_post",
+    name: "movie_post",
+    component: Movie_post,
+  },
 
-  }
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
 export default router;

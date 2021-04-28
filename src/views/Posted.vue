@@ -1,16 +1,42 @@
 <template>
 <div>
- <div class="main">
   <article>
-<p>未投稿です</p>
-<button @click="$router.push('/')">戻る</button>
-   </article>
+ <div class="main">
+   <p>{{this.review_id}}</p>
+<p>この映画のレビューは投稿済みです</p>
+<button @click="$router.push
+   ({
+     path:'/edit/'+id,
+     params:{id:id}
+   })">編集する</button>
+<button class="delete" @click="del(id)">削除する</button>
   </div>
+  </article>
  </div>
 </template>
 <script>
+import router from "../router/index";
+import axios from "axios";
 export default{
   props:["id"],
+  data(){
+    return{
+      review_id:this.id
+    }
+  },
+  methods:{
+    del(index){
+    axios({
+      method:"delete",
+      url:"https://intense-falls-67346.herokuapp.com/api/review/delete",
+      data:{
+        id:index
+      },
+    }).then(()=>{
+      router.push('/');
+    });
+  }
+},
 }
 </script>
 <style scoped>
@@ -58,7 +84,8 @@ button {
   text-align: center;
   font-size: 16px;
   padding:5px 0;
-  opacity:0.4
+  opacity:0.4;
+  margin-bottom:10px;
 }
 button:hover{
 opacity:10;
@@ -66,5 +93,8 @@ opacity:10;
 p{
   font-size:24px;
   margin-bottom: 30px;
+}
+.delete{
+  color:red
 }
 </style>

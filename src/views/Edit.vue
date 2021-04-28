@@ -1,6 +1,5 @@
 <template>
   <div>
-    <HeaderAuth/>
     <p>{{this.id}}</p>
     <div class="form">
      <p>:レビュー</p>
@@ -20,7 +19,6 @@
 <script>
 import axios from 'axios';
 import router from "../router/index"
-import HeaderAuth from "../components/HeaderAuth";
 export default {
   props:["id"],
   data(){
@@ -29,9 +27,6 @@ export default {
       content:"",
       point:"",
   }
-  },
-  components:{
-    HeaderAuth,
   },
   methods:{
     async getReview(){

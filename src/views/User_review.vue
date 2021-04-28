@@ -1,6 +1,5 @@
 <template>
 <div>
-  <HeaderAuth/>
  <div class="main">
    <p>{{this.$store.state.user.id}}</p>
   <div v-for="(review,index) in reviews" :key="index">
@@ -24,11 +23,10 @@
 <script>
 import router from "../router/index";
 import axios from "axios";
-import HeaderAuth from "../components/HeaderAuth";
 export default{
   props:["id"],
   data(){
-    return {
+  return {
    path:true,
    reviews:[]
   }
@@ -39,9 +37,6 @@ let data=[];
 const reviews= await axios.get(
 "https://intense-falls-67346.herokuapp.com/api/user_review?id="+this.$store.state.user.id);
  data.push(reviews.data.data);
-if(data[0].length<1){
-  router.push('/empty');
-}
  this.reviews=data[0];
  console.log(this.reviews);
   },
@@ -53,7 +48,7 @@ if(data[0].length<1){
         id:index
       },
     }).then(()=>{
-      router.push('/');
+    router.push('/');
     });
   }
 },
@@ -66,9 +61,6 @@ if(data[0].length<1){
       return "blue";
     }
 },
-  components:{
-    HeaderAuth
-  },
   created(){
     this.getShares();
  }

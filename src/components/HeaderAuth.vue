@@ -1,60 +1,71 @@
 <template>
- <div class="header flex">
-   <div class="left">
-     <img class="logo" src="../assets/movie-logo.png" @click="$router.push('/')">
-   </div>
-   <div class="right">
-     <div v-if="active">
-       <p>ようこそ{{$store.state.user.name}}さん</p>
-     <p @click="$store.dispatch('logout'),logout()">ログアウトする</p>
-   </div>
+  <div class="header flex">
+    <div class="left">
+      <img
+        class="logo"
+        src="../assets/movie-logo.png"
+        @click="$router.push('/')"
+      />
+    </div>
+    <div class="right">
+      <div v-if="active">
+        <p class="name">ようこそ{{ $store.state.user.name }}さん</p>
+        <p @click="$store.dispatch('logout'), logout()">ログアウトする</p>
+      </div>
       <div v-else>
-     <p @click="$router.push('/signup')">新規登録</p>
-     <p @click="$router.push('/login')">ログイン</p>
+        <p @click="$router.push('/signup')">新規登録</p>
+        <p @click="$router.push('/login')">ログイン</p>
       </div>
     </div>
-   </div>
+  </div>
 </template>
 <script>
 export default {
-data(){
-  return {
-    active:""
-  };
- },
- methods:{
-   logout(){
-     this.active=false
-   }
- },
- created:function(){
-   this.active=this.$store.state.user
- }
-}
+  data() {
+    return {
+      active: "",
+    };
+  },
+  methods: {
+    logout() {
+      this.active = false;
+    },
+  },
+  created: function() {
+    this.active = this.$store.state.user;
+  },
+};
 </script>
 
 <style scoped>
 .right {
- align-items: center;
+  align-items: center;
 }
 .right p {
-padding-top:25px;
- cursor: pointer;
- font-size:20px;
+  padding-top: 25px;
+  cursor: pointer;
+  font-size: 20px;
 }
 .header {
- height:120px;
- border-bottom:10px solid;
+  height: 120px;
+  border-bottom: 5px solid;
 }
 .logo {
- width: 120px;
- height:120px;
- cursor: pointer;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
 }
 .flex {
- display: flex;
- padding:0 70px;
- justify-content: space-between;
+  display: flex;
+  padding: 0 70px;
+  justify-content: space-between;
 }
-
+p:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+.name:hover {
+  opacity: 1;
+  cursor: default;
+}
 </style>
