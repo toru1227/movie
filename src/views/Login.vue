@@ -27,13 +27,10 @@ export default {
         email:this.email,
         password:this.password
       });
-      if(this.email==="" || this.password==="" || this.$store.state.auth===false){
+      if(this.email==="" || this.password===""){
         this.error="正しいメールアドレス、パスワードを入力してください"
       }
-      if(this.$store.state.auth === true){
-        this.$router.push('/');
-        this.$router.go({path: '/', force: true})
-      }
+     this.$router.push('/')
     }
   }
 };

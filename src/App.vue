@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HeaderAuth />
-    <router-view :key="$route.fullPath"/>
+    <router-view :key="$route.fullPath"></router-view>
     <div v-if="this.$route.path == '/'">
       <FooterAuth />
     </div>

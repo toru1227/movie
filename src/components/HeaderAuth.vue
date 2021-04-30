@@ -7,12 +7,13 @@
         @click="$router.push('/')"
       />
     </div>
+    <p>{{this.$store.state.auth}}</p>
     <div class="right">
-      <div v-if="active">
+      <div v-if="this.$store.state.auth">
         <p class="name">ようこそ{{ $store.state.user.name }}さん</p>
-        <p @click="$store.dispatch('logout'), logout()">ログアウトする</p>
+        <p class="logout" @click="$store.dispatch('logout')">ログアウトする</p>
       </div>
-      <div v-else>
+      <div v-else-if="!active">
         <p @click="$router.push('/signup')">新規登録</p>
         <p @click="$router.push('/login')">ログイン</p>
       </div>
@@ -25,15 +26,7 @@ export default {
     return {
       active: "",
     };
-  },
-  methods: {
-    logout() {
-      this.active = false;
-    },
-  },
-  created: function() {
-    this.active = this.$store.state.user;
-  },
+ },
 };
 </script>
 
@@ -44,7 +37,7 @@ export default {
 .right p {
   padding-top: 25px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
 }
 .header {
   height: 120px;

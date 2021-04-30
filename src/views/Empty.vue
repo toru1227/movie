@@ -2,9 +2,11 @@
 <div>
  <div class="main">
   <article>
-<p>未投稿です</p>
-<button @click="$router.push('/')">戻る</button>
-   </article>
+<p>まだ投稿はありません</p>
+<div class="box">
+<button class="button" @click="$router.push('/')">戻る</button>
+</div>
+ </article>
   </div>
  </div>
 </template>
@@ -16,14 +18,14 @@ export default{
 <style scoped>
 
 article{
-  padding:50px 0;
-  margin:20px auto 30px;
+  margin:30px auto 30px;
   width:60%;
   background-color: #fff;
-  padding:30px 50px;
-
+  padding:50px 50px;
+  text-align: center ;
   border-radius: 10px;
 }
+
 .title{
   padding-bottom:50px;
   font-weight: bold;;
@@ -34,6 +36,7 @@ article{
   font-size: 20px;
   line-height:1.2;
 }
+
 .author{
   padding: 20px 0;
   font-size: 15px;
@@ -54,11 +57,12 @@ button {
   display: block;
   background-color: #fff;
   border:1px solid;
-   width:15%;
+  width:15%;
   text-align: center;
   font-size: 16px;
   padding:5px 0;
-  opacity:0.4
+  opacity:0.4;
+  margin: 0 0 0 auto;
 }
 button:hover{
 opacity:10;

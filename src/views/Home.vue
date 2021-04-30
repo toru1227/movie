@@ -1,195 +1,244 @@
 <template>
   <div>
-<h1>現在上映中の映画</h1>
-<p>{{$store.state.master_user}}</p>
-<div class="flex">
-<div class="profile">
-  <div v-if="login">
-  <p class="profile-text">プロフィール</p>
-  <p v-if="this.reviews_length<1" class="reveiws" @click="$router.push('/empty')">投稿一覧を見る</p>
-  <p v-else class="reveiws" @click="$router.push
-  ({
-   path:'/user_review/'+ $store.state.user.id,
-   params:{id:$store.state.user.id}
-  })">投稿一覧を見る</p>
-  </div>
-    <div v-else>
-     <p class="profile-signup" @click="$router.push('/signup')">新規登録</p>
-     <p class="profile-login" @click="$router.push('/login')">ログイン</p>
-</div>
-
-</div>
-<div>
- <ul class="home" v-for="(value,index) in shares" :key="index">
-    <li><button @click="$router.push
-      ({
-        path:'/review/'+value.data.id,
-        params:{id:value.data.id}
-        })
-        ">{{value.data.title}}のレビューを見る</button>
-      <li>
-        <li class="point">平均点:<span :class="averageColor(value.average)">{{value.average}}</span>
-        </li>
-        <li>
-        <button v-if="login" @click="
-        $router.push({
-        path:'/post/'+value.data.id,
-        params:{id:value.data.id}
-        })">レビューを投稿する</button>
-       <div v-else-if="!login">
-       <button class="login" @click="$router.push('/login')">ログインしてレビューを投稿する</button>
-      <button class="signup" @click="$router.push('/signup')">ユーザー登録してレビューを投稿する</button>
+    <h1>現在上映中の映画</h1>
+    <div class="flex">
+      <div class="profile">
+        <div v-if="login">
+          <p class="profile-text">プロフィール</p>
+          <p v-if="this.reviews_length < 1"
+            class="reveiws"
+            @click="$router.push('/empty')"> 投稿一覧を見る
+          </p>
+          <p v-else
+            class="reveiws"
+            @click="
+              $router.push({
+                path: '/user_review/' + $store.state.user.id,
+                params: { id: $store.state.user.id },
+              })">
+            投稿一覧を見る
+          </p>
+        </div>
+        <div v-else>
+          <p class="profile-signup" @click="$router.push('/signup')">
+            新規登録
+          </p>
+          <p class="profile-login" @click="$router.push('/login')">ログイン</p>
+        </div>
       </div>
-       </li>
-   </ul>
-   </div>
-   </div>
+      <div>
+        <ul class="home" v-for="(value, index) in shares" :key="index">
+          <li>
+            <button
+              @click="
+                $router.push({
+                  path: '/review/' + value.data.id,
+                  params: { id: value.data.id },
+                })">
+              {{ value.data.title }}のレビューを見る
+            </button>
+          </li>
+          <li></li>
+          <li class="point">
+            平均点:<span :class="averageColor(value.average)">{{
+              value.average
+            }}</span>
+          </li>
+          <li>
+            <button
+              v-if="login"
+              @click="
+                $router.push({
+                  path: '/post/' + value.data.id,
+                  params: { id: value.data.id },
+                }) ">
+              レビューを投稿する
+            </button>
+            <div v-else-if="!login">
+              <button class="login" @click="$router.push('/login')">
+                ログインしてレビューを投稿する
+              </button>
+              <button class="signup" @click="$router.push('/signup')">
+                ユーザー登録してレビューを投稿する
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import axios from 'axios';
-export default{
-  data(){
-    return{
-      user_id:this.$store.state.user.id,
-      login:this.$store.state.auth,
-      reviews_length:"",
-      posteds:[],
-      user_review:[],
-      shares:[
-      ],
+import axios from "axios";
+export default {
+  data() {
+    return {
+      user_id: this.$store.state.user.id,
+      login: this.$store.state.auth,
+      reviews_length: "",
+      reviews_posted: "",
+      posteds: [],
+      user_review: [],
+      shares: [],
     };
   },
-
-  methods:{
-   averageColor(average){
-    if(average<2.9){
-    return "red";
-    }else if(average >=3 && average<3.9){
-      return "yellow";
-    }else if(average>=4){
-      return "blue";
-    }
-   },
-    async getShares(){
-      const sharesdata= await axios.get("https://intense-falls-67346.herokuapp.com/api"
-      );
-  this.shares=sharesdata.data.data;
+  created: function() {
+    this.getShares();
+    this.getUserReview();
+    // this.posted();
+  },
+  watch: {
+    headerAuth:function(){
+      this.getShares();
+    },
+    function() {
+      this.getShares();
+    },
+  },
+  methods: {
+    averageColor(average) {
+      if (average < 2.9) {
+        return "red";
+      } else if (average >= 3 && average < 3.9) {
+        return "yellow";
+      } else if (average >= 4) {
+        return "blue";
+      }
+    },
+    async posted(id) {
+      let datas = [];
+      const reviews = await axios.get(
+        "https://intense-falls-67346.herokuapp.com/api/review/show?id=" + id);
+      datas.push(reviews.data.data);
+      let posted_user_id = [];
+      for (let i = 0; i < datas[0].length; i++) {
+        posted_user_id.push(datas[0][i]["item"].user_id);
+      }
+      if (posted_user_id.indexOf(String(this.$store.state.user.id)) >= 0) {
+      console.log(posted_user_id);
+      return true
+      } else if (posted_user_id.indexOf(String(this.$store.state.user.id)) < 0){
+       console.log(posted_user_id);
+     return false;
+      }
     },
 
-async getUserReview(){
-let data=[];
-const reviews= await axios.get(
-"https://intense-falls-67346.herokuapp.com/api/user_review?id="+this.$store.state.user.id);
- data.push(reviews.data.data);
- this.reviews_length=data[0].length;
- this.user_review=data[0];
-console.log(data);
- }
-},
-  created(){
-  this.getShares(),
-  this.getUserReview()
+    async getShares() {
+      const sharesdata = await axios.get(
+        "https://intense-falls-67346.herokuapp.com/api"
+      );
+      this.shares = sharesdata.data.data;
+
+    },
+    async getUserReview() {
+      let data = [];
+      const reviews = await axios.get(
+        "https://intense-falls-67346.herokuapp.com/api/user_review?id=" +
+          this.$store.state.user.id
+      );
+      data.push(reviews.data.data);
+      this.reviews_length = data[0].length;
+      this.user_review = data[0];
+    },
+  },
   }
-};
 </script>
 <style scoped>
 span {
-  padding-left:5px;
+  padding-left: 5px;
 }
 .point {
-  font-variant-ligatures:none;
-  letter-spacing:2px;
+  font-variant-ligatures: none;
+  letter-spacing: 2px;
 }
 button {
-  box-shadow:1px 1px 3px;
+  box-shadow: 1px 1px 3px;
   font-size: 18px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   background-color: #fff;
   border: 1px solid;
-  padding:10px 10px;
+  padding: 10px 10px;
   border: 1px solid rgb(182, 182, 182);
-  border-radius:3px;
+  border-radius: 3px;
 }
 button:hover {
-background-color: rgb(0, 102, 204);
- color:#f0f0f0;
+  background-color: rgb(0, 102, 204);
+  color: #f0f0f0;
 }
 li {
   font-size: 18px;
-  padding:10px 0 20px 0;
+  padding: 10px 0 20px 0;
 }
 .title {
-  font-size:30px;
+  font-size: 30px;
   padding-bottom: 20px;
-color:#414b5b;
+  color: #414b5b;
 }
 .home {
-  padding:50px 30px 50px 50px;
-  width:80%;
+  padding: 50px 30px 50px 50px;
+  width: 80%;
   /* margin:0 auto; */
   list-style-type: none;
   background-color: #fff;
   margin-bottom: 30px;
   border-radius: 10px;
-display: inline-block;
+  display: inline-block;
 }
 .profile {
-  width:35%;
-   background-color: #fff;
-   margin:0 20px;
-   height: 100px;
-   border-radius: 10px;
-   font-size: 20px;
+  width: 35%;
+  background-color: #fff;
+  margin: 0 20px;
+  height: 100px;
+  border-radius: 10px;
+  font-size: 20px;
 }
 .profile-signup,
-.profile-login{
-  padding:15px 20px;
+.profile-login {
+  padding: 15px 20px;
 }
-.profile-text{
-  padding:10px 20px;
+.profile-text {
+  padding: 10px 20px;
 }
 .reveiws {
-  padding:10px 20px;
+  padding: 10px 20px;
 }
-.post{
-padding-bottom:10px;
-font-size:20px;
+.post {
+  padding-bottom: 10px;
+  font-size: 20px;
 }
-h1{
+h1 {
   text-align: center;
-  padding:50px 0;
-  font-size:30px;
-color:#414b5b;
-
+  padding: 50px 0;
+  font-size: 30px;
+  color: #414b5b;
 }
 
 .login {
   display: block;
-    font-size: 15px;
+  font-size: 15px;
 }
 .signup {
   display: block;
-    font-size: 15px;
+  font-size: 15px;
 }
 .red {
-  color:red
+  color: red;
 }
 .yellow {
-  color:rgb(11, 201, 27)
+  color: rgb(11, 201, 27);
 }
 .blue {
-  color:rgb(53, 182, 196)
+  color: rgb(53, 182, 196);
 }
-.flex{
+.flex {
   display: flex;
 }
 .edit,
-.delete{
-  display:block;
+.delete {
+  display: block;
 }
-.delete:hover{
-  background-color:rgb(237, 73, 73);
-  opacity:0.6
+.delete:hover {
+  background-color: rgb(237, 73, 73);
+  opacity: 0.6;
 }
 </style>

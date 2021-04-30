@@ -12,7 +12,6 @@
   </div>
 </template>
 <script>
-
 import axios from "axios";
 export default {
   data() {
@@ -23,17 +22,22 @@ export default {
     };
   },
   methods:{
+    errorCheck(){
+      if(this.title=="" || this.release_date==""){
+        return this.error="タイトル、公開日を入力してください";
+      }
+      this.send();
+    },
       send(){
       axios
       .post("https://intense-falls-67346.herokuapp.com/api/movie_post",
       {
         title:this.title,
         release_date:this.release_date
-      });
-      if(this.title=="" || this.release_date==""){
-        return this.error="タイトル、公開日を入力してください";
-      }
-    this.$router.push('/master_main');
+      })
+      .then(()=>{
+   this.$router.push('/master_main');
+      })
     },
   }
 };

@@ -32,13 +32,16 @@ export default {
       movies: [],
     };
   },
-
+  watch: {
+      function() {
+      this.getMovies();
+    },
+  },
   methods: {
-      async getMovies() {
+    async getMovies() {
       const movies = await axios.get(
         "https://intense-falls-67346.herokuapp.com/api"
       );
-      console.log(movies.data.data);
       this.movies = movies.data.data;
     },
     logout() {
@@ -53,12 +56,13 @@ export default {
           id: index,
         },
       }).then(() => {
+  
         router.go({ path: this.$router.currentRoute.path, force: true });
       });
     },
   },
   created() {
-    this.getMovies()
+    this.getMovies();
     if (!this.$store.state.master_user == true) {
       this.$router.push("/");
     }

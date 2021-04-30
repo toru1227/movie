@@ -13,6 +13,7 @@ import Posted from "../views/Posted.vue";
 import MasterLogin from "../views/MasterLogin.vue";
 import Movie_post from "../views/Movie_post.vue";
 import Master_main from "../views/Master_main.vue";
+import Logout from "../views/Logout.vue";
 // import store from "../store/index";
 Vue.use(VueRouter);
 
@@ -83,7 +84,11 @@ const routes = [
     name: "movie_post",
     component: Movie_post,
   },
-
+  {
+    path: "/logout",
+    name:"logout",
+    component:Logout,
+  }
 ];
 
 const router = new VueRouter({

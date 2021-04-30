@@ -13,7 +13,7 @@
     <option value="4">4</option>
     <option value="5" selected>5</option>
     </select>
-    <div @click="send()">
+    <div @click="errorCheck(),send()">
     <button>投稿する</button>
     </div>
     </div>
@@ -33,6 +33,11 @@ export default {
   }
   },
   methods:{
+    errorCheck(){
+        if(this.content=="" || this.content.length<10){
+        return this.error="レビューは10文字以上で入力してください";
+        }
+    },
     send(){
       axios
       .post("https://intense-falls-67346.herokuapp.com/api/review",
@@ -41,11 +46,10 @@ export default {
         point:this.point,
         movie_id:this.id,
         user_id:this.$store.state.user.id
+      })
+      .then(function(){
+        router.push('/');
       });
-      if(this.content=="" || this.content.length<10){
-        return this.error="レビューは10文字以上で入力してください";
-      }
-    this.$router.push('/');
     },
  async posted(){
  let datas=[];
