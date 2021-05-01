@@ -41,6 +41,9 @@ const routes = [
     name: "review",
     component: Review,
     props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/post/:id",
@@ -90,18 +93,18 @@ const routes = [
     path: "/movie_edit/:id",
     name: "movie_edit",
     component: Movie_edit,
-    props:true
+    props: true,
   },
   {
     path: "/logout",
-    name:"logout",
-    component:Logout,
+    name: "logout",
+    component: Logout,
   },
   {
     path: "/signup_completed",
     name: "signup_completed",
-    component:Signup_completed,
-  }
+    component: Signup_completed,
+  },
 ];
 
 const router = new VueRouter({

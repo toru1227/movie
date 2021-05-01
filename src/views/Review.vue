@@ -80,7 +80,10 @@ export default {
               },
             }).then((response) => {
               console.log(response);
-            this.$router.go('/review/' + this.id)
+            this.$router.go({
+                path: this.$router.currentRoute.path,
+                force: true,
+              });
             });
           }
         });
@@ -93,12 +96,10 @@ export default {
           .then((response) => {
             console.log(response);
             this.isRed = true;
-            this.$router.go('/review/' + this.id)
-            // this.$router.push(this.$route.path)
-            // this.$router.go({
-            //   path: this.$router.currentRoute.path,
-            //   force: true,
-            // });
+            this.$router.go({
+                path: this.$router.currentRoute.path,
+                force: true,
+              });
           });
       }
     },
