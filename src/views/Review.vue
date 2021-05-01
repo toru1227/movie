@@ -64,7 +64,6 @@ export default {
         this.$router.push("/empty");
       }
     },
-
     fav(index) {
       const result = this.reviews[index].like.some((value) => {
         return value.user_id == this.$store.state.user.id;
@@ -81,10 +80,7 @@ export default {
               },
             }).then((response) => {
               console.log(response);
-              this.$router.go({
-                path: this.$router.currentRoute.path,
-                force: true,
-              });
+            this.$router.go('/review/' + this.id)
             });
           }
         });
@@ -97,14 +93,15 @@ export default {
           .then((response) => {
             console.log(response);
             this.isRed = true;
-            this.$router.go({
-              path: this.$router.currentRoute.path,
-              force: true,
-            });
+            this.$router.go('/review/' + this.id)
+            // this.$router.push(this.$route.path)
+            // this.$router.go({
+            //   path: this.$router.currentRoute.path,
+            //   force: true,
+            // });
           });
       }
     },
-
     pointColor(point) {
       if (point < 2.9) {
         return "red";
