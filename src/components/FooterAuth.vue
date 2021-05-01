@@ -1,7 +1,12 @@
 <template>
   <div class="footer">
     <p class="copy">© sample. 2021.</p>
+    <div v-if="$store.state.master_user">
+    <p class="login" @click="$router.push('/master_main')">管理者ログイン</p>
+    </div>
+    <div v-else>
     <p class="login" @click="$router.push('/master_login')">管理者ログイン</p>
+    </div>
   </div>
 </template>
 <script>

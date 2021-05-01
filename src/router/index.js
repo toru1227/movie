@@ -14,6 +14,8 @@ import MasterLogin from "../views/MasterLogin.vue";
 import Movie_post from "../views/Movie_post.vue";
 import Master_main from "../views/Master_main.vue";
 import Logout from "../views/Logout.vue";
+import Signup_completed from "../views/signup_completed.vue"
+import Movie_edit from "../views/Movie_edit.vue"
 // import store from "../store/index";
 Vue.use(VueRouter);
 
@@ -85,9 +87,20 @@ const routes = [
     component: Movie_post,
   },
   {
+    path: "/movie_edit/:id",
+    name: "movie_edit",
+    component: Movie_edit,
+    props:true
+  },
+  {
     path: "/logout",
     name:"logout",
     component:Logout,
+  },
+  {
+    path: "/signup_completed",
+    name: "signup_completed",
+    component:Signup_completed,
   }
 ];
 

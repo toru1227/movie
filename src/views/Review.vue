@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="main">
-      <p>{{ this.$store.state.user.id }}</p>
       <div v-for="(review, index) in reviews" :key="index">
         <article>
-          <p>{{ review.item.id }}</p>
           <p class="point">
             レビュー:<span :class="pointColor(review.item.point)"
               >{{ review.item.point }}点</span
@@ -14,12 +12,11 @@
           <p class="author">投稿者 {{ review.user_data.name }}</p>
           <p class="day">投稿日: {{ review.item.created_at }}</p>
           <p class="like">参考になった人数:{{ review.like.length }}人</p>
-          <button
+          <button v-if="$store.state.auth" class="fav_button"
             @click="fav(index)"
             :class="{ redcolor: favColor(review.like) }"
-          >
-            参考になった
-          </button>
+          >参考になった </button>
+
         </article>
       </div>
     </div>
@@ -54,9 +51,6 @@ export default {
       } else {
         return false;
       }
-      //  if(like_length.indexOf("14")==1){
-      //   return true;
-      //  }
     },
     async getShares() {
       let data = [];
@@ -128,12 +122,10 @@ export default {
 </script>
 <style scoped>
 article {
-  padding: 50px 0;
   margin: 20px auto 30px;
-  width: 60%;
+  width: 50%;
   background-color: #fff;
   padding: 30px 50px;
-
   border-radius: 10px;
 }
 .title {
@@ -159,11 +151,17 @@ article {
   font-size: 20px;
 }
 .like {
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 button {
   background-color: #fff;
   border: 1px solid;
+  border-radius: 10px 10px;
+  padding:5px;
+}
+button:hover {
+  cursor: pointer;
+  opacity:0.5;
 }
 .red {
   color: red;
@@ -175,6 +173,6 @@ button {
   color: rgb(53, 182, 196);
 }
 .redcolor {
-  background: #ff0084;
+  background-color:#ed0d2ed6;
 }
 </style>

@@ -4,6 +4,8 @@
     <div class="card">
        <p class="card-title">新規登録</p>
    <div class="form">
+     <p class="error">{{error}}
+     </p>
     <input type="text" placeholder="ユーザーネーム" v-model="name">
     <input type="email" placeholder="メールアドレス" v-model="email">
     <input type="password" placeholder="パスワード" v-model="password">
@@ -20,26 +22,33 @@ export default{
     return {
       name:"",
       email:"",
-      password:""
+      password:"",
+      error:""
     };
   },
   methods:{
     auth(){
+         this.error="";
+        if(this.name==""||this.email==""||this.password==""){
+        return this.error="名前、メールアドレス、パスワードを入力してください"
+        }
       axios
       .post('https://intense-falls-67346.herokuapp.com/api/signup',{
         name:this.name,
-        profile:this.profile,
         email:this.email,
         password:this.password
       })
       .then(response=>{
-      console.log(response);
-      this.$router.replace("/");
+        console.log(response.data);
+      if(response.data.message=="duplicate"){
+        return this.error="このメールアドレスは登録されています"
+       }
+      this.$router.push("/signup_completed");
       })
-      .catch(error=>{
-        alert(error);
-      });
-    }
+       .catch((error) => {
+          console.log(error);
+        });
+    },
   }
 };
 </script>
@@ -50,8 +59,13 @@ button {
   padding:8px 0 10px;
   background-color:#00b7ff;
   color:#f0f0f0;
+  font-size: 16px;
 }
-
+.error {
+  color:red;
+  font-size: 15px;
+  padding-bottom: 10px;
+}
 .card {
   border:1px solid;
   border-radius: 5px;
@@ -71,6 +85,7 @@ input{
   width:80%;
  padding:8px 0 10px;
    box-sizing: border-box;
+   font-size: 16px;
 }
 .form {
 

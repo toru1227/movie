@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="card">
-
+    <div class="card"
+   >
       <p class="card-title">管理者ログイン</p>
       <div class="form">
         <p class="error">{{error}}</p>
         <input type="email" placeholder="メールアドレス" v-model="email" />
         <input type="password" placeholder="パスワード" v-model="password" />
-        <button @click="auth()">ログイン</button>
+        <button @click="errorCheck()">ログイン</button>
       </div>
     </div>
   </div>
@@ -26,13 +26,22 @@ export default {
       this.$store.dispatch("masterLogin",{
         email:this.email,
         password:this.password
-      });
-          if(this.$store.state.master_user === true){
-           this.$router.push('/master_main')
-          }else{
-           return this.error="正しいメールアドレス、パスワードを入力してください";
-          }
+      })
+    .then(()=>{
+     if(this.$store.state.master_user===false){
+     return this.error="メールアドレス、もしくはパスワードが間違っています"
+     }else if(this.$store.state.master_user===true){
+       this.$router.push('/master_main');
+     }
+      })
     },
+    errorCheck(){
+      this.error="";
+      if(this.email==""||this.password==""){
+        return this.error="メールアドレス、パスワードを入力してください";
+      }
+      this.auth();
+    }
   },
 };
 </script>

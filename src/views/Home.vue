@@ -1,32 +1,8 @@
 <template>
   <div>
     <h1>現在上映中の映画</h1>
-    <div class="flex">
-      <div class="profile">
-        <div v-if="login">
-          <p class="profile-text">プロフィール</p>
-          <p v-if="this.reviews_length < 1"
-            class="reveiws"
-            @click="$router.push('/empty')"> 投稿一覧を見る
-          </p>
-          <p v-else
-            class="reveiws"
-            @click="
-              $router.push({
-                path: '/user_review/' + $store.state.user.id,
-                params: { id: $store.state.user.id },
-              })">
-            投稿一覧を見る
-          </p>
-        </div>
-        <div v-else>
-          <p class="profile-signup" @click="$router.push('/signup')">
-            新規登録
-          </p>
-          <p class="profile-login" @click="$router.push('/login')">ログイン</p>
-        </div>
-      </div>
-      <div>
+    <div class="main">
+      <div class="main-inner">
         <ul class="home" v-for="(value, index) in shares" :key="index">
           <li>
             <button
@@ -34,7 +10,9 @@
                 $router.push({
                   path: '/review/' + value.data.id,
                   params: { id: value.data.id },
-                })">
+                })
+              "
+            >
               {{ value.data.title }}のレビューを見る
             </button>
           </li>
@@ -45,16 +23,19 @@
             }}</span>
           </li>
           <li>
+            <div v-if="$store.state.auth">
             <button
-              v-if="login"
               @click="
                 $router.push({
                   path: '/post/' + value.data.id,
                   params: { id: value.data.id },
-                }) ">
+                })
+              "
+            >
               レビューを投稿する
             </button>
-            <div v-else-if="!login">
+            </div>
+            <div v-else-if="!$store.state.auth">
               <button class="login" @click="$router.push('/login')">
                 ログインしてレビューを投稿する
               </button>
@@ -74,7 +55,6 @@ export default {
   data() {
     return {
       user_id: this.$store.state.user.id,
-      login: this.$store.state.auth,
       reviews_length: "",
       reviews_posted: "",
       posteds: [],
@@ -85,15 +65,13 @@ export default {
   created: function() {
     this.getShares();
     this.getUserReview();
-    // this.posted();
   },
   watch: {
-    headerAuth:function(){
+    headerAuth: function() {
       this.getShares();
+      this.getUserReview();
     },
-    function() {
-      this.getShares();
-    },
+
   },
   methods: {
     averageColor(average) {
@@ -108,18 +86,21 @@ export default {
     async posted(id) {
       let datas = [];
       const reviews = await axios.get(
-        "https://intense-falls-67346.herokuapp.com/api/review/show?id=" + id);
+        "https://intense-falls-67346.herokuapp.com/api/review/show?id=" + id
+      );
       datas.push(reviews.data.data);
       let posted_user_id = [];
       for (let i = 0; i < datas[0].length; i++) {
         posted_user_id.push(datas[0][i]["item"].user_id);
       }
       if (posted_user_id.indexOf(String(this.$store.state.user.id)) >= 0) {
-      console.log(posted_user_id);
-      return true
-      } else if (posted_user_id.indexOf(String(this.$store.state.user.id)) < 0){
-       console.log(posted_user_id);
-     return false;
+        console.log(posted_user_id);
+        return true;
+      } else if (
+        posted_user_id.indexOf(String(this.$store.state.user.id)) < 0
+      ) {
+        console.log(posted_user_id);
+        return false;
       }
     },
 
@@ -128,7 +109,6 @@ export default {
         "https://intense-falls-67346.herokuapp.com/api"
       );
       this.shares = sharesdata.data.data;
-
     },
     async getUserReview() {
       let data = [];
@@ -137,11 +117,12 @@ export default {
           this.$store.state.user.id
       );
       data.push(reviews.data.data);
+      this.login=this.$store.state.auth;
       this.reviews_length = data[0].length;
       this.user_review = data[0];
     },
   },
-  }
+};
 </script>
 <style scoped>
 span {
@@ -150,6 +131,9 @@ span {
 .point {
   font-variant-ligatures: none;
   letter-spacing: 2px;
+}
+.main {
+  width:100%;
 }
 button {
   box-shadow: 1px 1px 3px;
@@ -174,33 +158,20 @@ li {
   padding-bottom: 20px;
   color: #414b5b;
 }
+.main {
+  margin: 20px auto 30px;
+  width: 70%;
+
+  padding: 30px 50px;
+}
 .home {
   padding: 50px 30px 50px 50px;
-  width: 80%;
-  /* margin:0 auto; */
+  width: 100%;
   list-style-type: none;
   background-color: #fff;
   margin-bottom: 30px;
   border-radius: 10px;
   display: inline-block;
-}
-.profile {
-  width: 35%;
-  background-color: #fff;
-  margin: 0 20px;
-  height: 100px;
-  border-radius: 10px;
-  font-size: 20px;
-}
-.profile-signup,
-.profile-login {
-  padding: 15px 20px;
-}
-.profile-text {
-  padding: 10px 20px;
-}
-.reveiws {
-  padding: 10px 20px;
 }
 .post {
   padding-bottom: 10px;

@@ -80,15 +80,14 @@ button {
   display: block;
   background-color: #fff;
   border:1px solid;
-   width:15%;
   text-align: center;
   font-size: 16px;
-  padding:5px 0;
+  padding:5px 20px;
   opacity:0.4;
   margin-bottom:10px;
 }
 button:hover{
-opacity:10;
+opacity:1;
 }
 p{
   font-size:24px;

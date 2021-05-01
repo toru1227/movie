@@ -15,7 +15,9 @@
 </template>
 <script>
 import axios from "axios";
+import router from '../router';
 export default {
+  props:['id'],
   data() {
     return {
       title: "",
@@ -23,23 +25,32 @@ export default {
       error: "",
     };
   },
+  created(){
+    this.getMovie();
+  },
   methods: {
     errorCheck() {
-      this.error="";
       if (this.title == "" || this.release_date == "") {
         return this.error = "タイトル、公開日を入力してください";
       }
       this.send();
     },
+    async getMovie(){
+
+    const movie =await axios.get("https://intense-falls-67346.herokuapp.com/api/movie_edit?id="+this.id);
+    console.log(movie.data.data);
+     this.title=movie.data.data.title;
+     this.release_date=movie.data.data.release_date;
+    },
     send() {
       axios
-        .post("https://intense-falls-67346.herokuapp.com/api/movie_post", {
-          title: this.title,
-          release_date: this.release_date,
+        .post("https://intense-falls-67346.herokuapp.com/api/movie_edit?id="+this.id, {
+          title:this.title,
+          release_date:this.release_date
         })
-       .then(()=>{
-        this.$router.push('/master_main');
-      });
+        .then(()=>{
+      router.push('/master_main');
+    });
     },
   },
 };
@@ -50,12 +61,9 @@ export default {
   width: 50%;
   margin: 0 auto;
 }
-
-input{
-  width:100%;
+input {
+  width: 50%;
   margin-bottom: 20px;
-  font-size:18px;
-  padding:5px ;
 }
 button {
   font-size: 18px;
@@ -66,10 +74,9 @@ textarea {
   padding: 10px;
 }
 p {
-  font-size: 18px;
+  font-size: 20px;
   padding-bottom: 10px;
 }
-
 select {
   margin-bottom: 20px;
 }
@@ -82,12 +89,33 @@ select {
 }
 .button {
   text-align: right;
-  text-decoration-line: none;
-}
-.button:hover {
   cursor: pointer;
-  opacity: 0.5;
-  
+  font-size: 16px;
 }
+input{
+  width:100%;
+  font-size:18px;
+  padding:5px ;
+}
+button {
+  cursor: pointer;
+  display:inline-block;
+  padding:5px;
+  font-size: 16px;
+  margin-right:10px;
+  margin-bottom: 10px;
+  border:1px solid black;
+  opacity:0.5;
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: #fff;
+}
+button:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+.button {
+text-align: right;
 
+}
 </style>

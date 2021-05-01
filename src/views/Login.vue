@@ -6,7 +6,7 @@
      <p class="error">{{error}}</p>
     <input type="email" placeholder="メールアドレス" v-model="email">
     <input type="password" placeholder="パスワード" v-model="password">
-    <button @click="auth">ログイン</button>
+    <button @click="errorCheck()">ログイン</button>
    </div>
  </div>
 </div>
@@ -26,12 +26,21 @@ export default {
       this.$store.dispatch("login",{
         email:this.email,
         password:this.password
-      });
-      if(this.email==="" || this.password===""){
-        this.error="正しいメールアドレス、パスワードを入力してください"
+      })
+      .then(()=>{
+   if(this.$store.state.auth==false){
+     return this.error="メールアドレス、もしくはパスワードが間違っています"
+   }
+    })
+    },
+    errorCheck(){
+      this.error="";
+      if(this.email=="" || this.password==""){
+        return this.error="正しいメールアドレス、パスワードを入力してください"
+      }else {
+        this.auth()
+       }
       }
-     this.$router.push('/')
-    }
   }
 };
 </script>
@@ -44,6 +53,7 @@ button {
   padding:8px 0 10px;
   background-color:#00b7ff;
   color:#f0f0f0;
+  font-size: 16px;
 }
 .error{
   color:red;
@@ -69,6 +79,7 @@ input{
   width:80%;
  padding:8px 0 10px;
    box-sizing: border-box;
+   font-size: 16px;
 }
 .form {
 

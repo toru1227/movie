@@ -13,7 +13,7 @@
     <option value="4">4</option>
     <option value="5" selected>5</option>
     </select>
-    <div @click="errorCheck(),send()">
+    <div @click="errorCheck()">
     <button>投稿する</button>
     </div>
     </div>
@@ -37,6 +37,7 @@ export default {
         if(this.content=="" || this.content.length<10){
         return this.error="レビューは10文字以上で入力してください";
         }
+        this.send();
     },
     send(){
       axios
@@ -84,8 +85,8 @@ input {
 }
 textarea{
   width:100%;
-    margin-bottom:20px;
-    padding:10px;
+  margin-bottom:20px;
+  padding:10px;
 }
 p{
   padding-bottom:10px;

@@ -114,7 +114,7 @@ button {
   opacity:0.4
 }
 button:hover{
-opacity:10;
+opacity:1;
 }
 .edit {
 margin-bottom: 10px;

@@ -7,10 +7,33 @@
         @click="$router.push('/')"
       />
     </div>
-    <p>{{this.$store.state.auth}}</p>
+    <div v-if="this.$store.state.auth"><h1 class="name">
+      ようこそ{{$store.state.user['name']}}さん</h1></div>
     <div class="right">
       <div v-if="this.$store.state.auth">
-        <p class="name">ようこそ{{ $store.state.user.name }}さん</p>
+      <div class="my_review">
+      <div v-if="this.$store.state.auth">
+          <p
+            v-if="this.reviews_length <1"
+            class="reveiws"
+            @click="$router.push('/empty')"
+          >
+            投稿一覧を見る
+          </p>
+          <p
+            v-else
+            class="reveiws"
+            @click="
+              $router.push({
+                path: '/user_review/' + $store.state.user.id,
+                params: { id: $store.state.user.id },
+              })
+            "
+          >
+            投稿一覧を見る
+          </p>
+        </div>
+    </div>
         <p class="logout" @click="$store.dispatch('logout')">ログアウトする</p>
       </div>
       <div v-else-if="!active">
@@ -21,16 +44,37 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       active: "",
+      reviews_length:[],
     };
  },
+ methods:{
+     async getUserReview() {
+      let data = [];
+      const reviews = await axios.get(
+        "https://intense-falls-67346.herokuapp.com/api/user_review?id=" +
+          this.$store.state.user.id
+      );
+      data.push(reviews.data.data);
+      this.reviews_length = data[0].length;
+      this.user_review = data[0];
+    },
+  },
+created(){
+  this.getUserReview();
+}
 };
 </script>
 
 <style scoped>
+.name {
+  padding:20% 0;
+  font-size:20px;
+}
 .right {
   align-items: center;
 }
@@ -50,7 +94,7 @@ export default {
 }
 .flex {
   display: flex;
-  padding: 0 70px;
+  padding: 0 100px;
   justify-content: space-between;
 }
 p:hover {

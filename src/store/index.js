@@ -46,10 +46,13 @@ export default new Vuex.Store({
           },
         }
       );
+      console.log(responseLogin);
       console.log(responseUser.data.data);
       commit("auth", responseLogin.data.auth);
       commit("user", responseUser.data.data[0]);
-
+      if (responseLogin.data.auth == true) {
+        router.push('/');
+      }
     },
     logout({ commit }) {
       axios
@@ -59,8 +62,8 @@ export default new Vuex.Store({
         .then((response) => {
         console.log(response);
         commit("logout", response.data.auth);
-          commit("user","");
-          router.push("/logout");
+        commit("user","");
+        router.push("/logout");
         })
         .catch((error) => {
           console.log(error);
@@ -75,14 +78,18 @@ export default new Vuex.Store({
         });
       console.log(responseLogin.data.auth);
       commit("master_user",responseLogin.data.auth);
+      // if (this.state.master_login == true) {
+      //   router.push("/master_main");
+      // }
     },
+
       masterLogout({ commit }) {
       axios.post("https://intense-falls-67346.herokuapp.com/api/logout",
         {
           auth: this.state.master_user,
         }).then((response) => {
-          console.log(response)
           commit("master_logout",response.data.auth)
+
         }).catch((error) => {
           console.log(error);
         });
