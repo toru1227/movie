@@ -2,7 +2,6 @@
 <div>
   <article>
  <div class="main">
-   <p>{{this.review_id}}</p>
 <p>この映画のレビューは投稿済みです</p>
 <button @click="$router.push
    ({

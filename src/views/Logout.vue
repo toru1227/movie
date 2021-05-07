@@ -33,6 +33,6 @@ button {
   margin: 0 0 0 auto;
 }
 button:hover{
-opacity:10;
+opacity:1;
 }
 </style>

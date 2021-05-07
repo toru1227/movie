@@ -1,7 +1,6 @@
 <template>
 <div>
  <div class="main">
-   <p>{{this.$store.state.user.id}}</p>
   <div v-for="(review,index) in reviews" :key="index">
   <article>
    <p class="point">レビュー:<span>{{review.point}}点</span></p>

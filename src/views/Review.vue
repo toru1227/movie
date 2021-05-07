@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="main">
+      <div class="button-box">
+      <p class="back-button" @click="$router.push('/')">戻る</p>
+      </div>
       <div v-for="(review, index) in reviews" :key="index">
         <article>
           <p class="point">
@@ -10,13 +13,13 @@
           </p>
           <p class="text">{{ review.item.content }}</p>
           <p class="author">投稿者 {{ review.user_data.name }}</p>
-          <p class="day">投稿日: {{ review.item.created_at }}</p>
+
           <p class="like">参考になった人数:{{ review.like.length }}人</p>
           <button v-if="$store.state.auth" class="fav_button"
             @click="fav(index)"
             :class="{ redcolor: favColor(review.like) }"
           >参考になった </button>
-
+          <p class="day">投稿日: {{ review.item.date }}</p>
         </article>
       </div>
     </div>
@@ -60,6 +63,7 @@ export default {
       );
       data.push(reviews.data.data);
       this.reviews = data[0];
+      console.log(this.reviews);
       if (this.reviews.length < 1) {
         this.$router.push("/empty");
       }
@@ -142,6 +146,7 @@ article {
 }
 .day {
   font-size: 12px;
+  padding-top:10px;
   padding-bottom: 10px;
 }
 .point {
@@ -172,5 +177,24 @@ button:hover {
 }
 .redcolor {
   background-color:#ed0d2ed6;
+}
+
+button:hover{
+opacity:1;
+}
+.button-box {
+  display: block;
+  width:15%;
+  padding:5px 0;
+  opacity:1;
+  margin: 20px auto 30px;
+  width: 50%;
+   text-align: right;
+   font-size: 18px;
+}
+.back-button:hover {
+
+  opacity: 0.5;
+  cursor: pointer;
 }
 </style>

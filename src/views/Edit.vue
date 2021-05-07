@@ -78,6 +78,7 @@ textarea{
   padding:10px;
   margin-bottom:20px;
   border-color: #00b7ff;
+    font-size:18px;
 }
 p{
   font-size: 18px;
