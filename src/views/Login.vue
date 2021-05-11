@@ -12,7 +12,6 @@
 </div>
 </template>
 <script>
-// import axios from "axios";
 export default {
   data(){
     return {
@@ -31,7 +30,8 @@ export default {
    if(this.$store.state.auth==false){
      return this.error="メールアドレス、もしくはパスワードが間違っています"
    }
-    })
+   this.$router.push('/');
+      });
     },
     errorCheck(){
       this.error="";

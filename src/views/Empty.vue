@@ -3,6 +3,7 @@
     <div class="main">
       <article>
         <p>まだ投稿はありません</p>
+  
         <div class="box">
           <button class="button" @click="$router.push('/')">戻る</button>
         </div>

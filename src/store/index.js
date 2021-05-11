@@ -46,13 +46,9 @@ export default new Vuex.Store({
           },
         }
       );
-      console.log(responseLogin);
-      console.log(responseUser.data.data);
       commit("auth", responseLogin.data.auth);
-      commit("user", responseUser.data.data[0]);
-      if (responseLogin.data.auth == true) {
-        router.push('/');
-      }
+      commit("user",responseUser.data.data[0]);
+      console.log(responseLogin.data.auth)
     },
     logout({ commit }) {
       axios

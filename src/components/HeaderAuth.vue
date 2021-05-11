@@ -10,11 +10,12 @@
     <div v-if="this.$store.state.auth"><h1 class="name">
       ようこそ{{$store.state.user['name']}}さん</h1></div>
     <div class="right">
+
       <div v-if="this.$store.state.auth">
       <div class="my_review">
-      <div v-if="this.$store.state.auth">
+       <div v-if="this.$store.state.auth">
           <p
-            v-if="this.reviews_length <1"
+            v-if="this.reviews_length <0"
             class="reveiws"
             @click="$router.push('/empty')"
           >
@@ -34,7 +35,7 @@
           </p>
         </div>
     </div>
-        <p class="logout" @click="$store.dispatch('logout')">ログアウトする</p>
+        <p class="logout" @click="logout()">ログアウトする</p>
       </div>
       <div v-else-if="!active">
         <p @click="$router.push('/signup')">新規登録</p>
@@ -49,21 +50,28 @@ export default {
   data() {
     return {
       active: "",
-      reviews_length:[],
+      reviews_length:0,
     };
  },
  methods:{
+   logout(){
+   this.$store.dispatch('logout');
+   this.reviews_length=0;
+   },
      async getUserReview() {
       let data = [];
       const reviews = await axios.get(
         "https://intense-falls-67346.herokuapp.com/api/user_review?id=" +
-          this.$store.state.user.id
+      this.$store.state.user.id
       );
       data.push(reviews.data.data);
       this.reviews_length = data[0].length;
       this.user_review = data[0];
     },
   },
+  headerAuth: function() {
+    this.getUserReview();
+    },
 created(){
   this.getUserReview();
 }
