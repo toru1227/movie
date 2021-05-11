@@ -77,6 +77,7 @@ input {
   margin-bottom: 15px;
   width: 80%;
   padding: 8px 0 10px;
+  font-size:16px;
   box-sizing: border-box;
 }
 .form {
