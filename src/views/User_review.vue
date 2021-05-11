@@ -2,10 +2,14 @@
 <div>
  <div class="main">
   <div v-for="(review,index) in reviews" :key="index">
+
   <article>
+  <div v-for="(movie,index) in movies" :key="index">
+    <p class="movie_title" v-if="review.movie_id==movie.data.id">{{movie.data.title}}</p>
+    </div>
    <p class="point">レビュー:<span>{{review.point}}点</span></p>
 <p class="text">{{review.content}}</p>
-   <p class="day">投稿日: {{review.created_at}}</p>
+   <p class="day">投稿日: {{review.date}}</p>
    <button class="edit"
    @click="$router.push
    ({
@@ -15,7 +19,8 @@
    >編集する</button>
    <button class="delete" @click="del(review.id)"><span class="delete-color">削除する</span></button>
    </article>
-  </div>
+      </div>
+
  </div>
 </div>
 </template>
@@ -27,10 +32,18 @@ export default{
   data(){
   return {
    path:true,
-   reviews:[]
+   reviews:[],
+   movies:[],
   }
     },
 methods:{
+  async getMovies() {
+      const sharesdata = await axios.get(
+        "https://intense-falls-67346.herokuapp.com/api"
+      );
+      this.movies = sharesdata.data.data;
+      console.log(this.movies);
+    },
 async getShares(){
 let data=[];
 const reviews= await axios.get(
@@ -62,6 +75,7 @@ const reviews= await axios.get(
 },
   created(){
     this.getShares();
+    this.getMovies();
  }
 }
 </script>
@@ -86,17 +100,21 @@ article{
   font-size: 20px;
   line-height:1.2;
 }
+.movie_title {
+  font-size:20px;
+  padding-bottom:10px;
+}
 .author{
   padding: 20px 0;
   font-size: 15px;
 }
 .day{
   font-size: 16px;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
 .point {
   padding-bottom: 20px;
-  font-size: 20px;
+  font-size: 18px;
 }
 .like {
   padding-bottom:5px;
