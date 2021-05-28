@@ -14,6 +14,7 @@
           <th>削除</th>
         </tr>
         <tr v-for="(value, index) in movies" :key="index">
+          <td>{{value.data.picture}}</td>
           <td>{{ value.data.id }}</td>
           <td>{{ value.data.title }}</td>
           <td>{{ value.data.release_date }}</td>

@@ -6,6 +6,8 @@
       <input type="text" v-model="title" />
       <p>:映画公開日</p>
       <input type="text" v-model="release_date" />
+      <p>画像</p>
+      <input type="file" name="picture" accept="image/jpeg,image/gif,image/png">
       <div class="send"><button @click="errorCheck()">投稿する</button></div>
       <div>
         <p class="button" @click="$router.push('/master_main')">戻る</p>
@@ -87,7 +89,7 @@ select {
 .button:hover {
   cursor: pointer;
   opacity: 0.5;
-  
+
 }
 
 </style>
