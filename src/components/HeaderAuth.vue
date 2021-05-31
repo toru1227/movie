@@ -19,7 +19,7 @@
             class="reveiws"
             @click="$router.push('/empty')"
           >
-            投稿一覧を見る
+            自分の投稿一覧を見る
           </p>
           <p
             v-else
@@ -31,7 +31,7 @@
               })
             "
           >
-            投稿一覧を見る
+            自分の投稿一覧を見る
           </p>
         </div>
     </div>
@@ -82,6 +82,7 @@ created(){
 .name {
   padding:20% 0;
   font-size:20px;
+  font-weight: 400;
 }
 .right {
   align-items: center;

@@ -190,7 +190,7 @@ opacity:1;
   margin: 20px auto 30px;
   width: 50%;
    text-align: right;
-   font-size: 18px;
+   font-size: 20px;
 }
 .back-button:hover {
 

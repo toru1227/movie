@@ -8,14 +8,20 @@
       <table>
         <tr>
           <th>ID</th>
+          <th>写真</th>
           <th>タイトル</th>
           <th>上映開始日</th>
           <th>編集</th>
           <th>削除</th>
         </tr>
         <tr v-for="(value, index) in movies" :key="index">
-          <td>{{value.data.picture}}</td>
+
           <td>{{ value.data.id }}</td>
+          <!-- <td> <img :src="'../../../movie-api/storage/app/public/images/1.jpg'"></td> -->
+         <td><img :src="'/images/1.jpg'" alt=""></td>
+
+
+          <!-- <img src="../../../movie-api/storage/app/public/images/1.jpg"> -->
           <td>{{ value.data.title }}</td>
           <td>{{ value.data.release_date }}</td>
           <td><button class="button1" @click="$router.push
@@ -49,12 +55,14 @@ export default {
         "https://intense-falls-67346.herokuapp.com/api"
       );
       this.movies = movies.data.data;
+      console.log(this.movies);
     },
     logout() {
       this.$store.dispatch("masterLogout");
       this.$router.push("/");
     },
     del(index) {
+      if(confirm('本当に削除しますか？'))
       axios({
         method: "delete",
         url: "https://intense-falls-67346.herokuapp.com/api/movie_edit",
@@ -90,7 +98,9 @@ margin:0 auto;
 display: flex;
 justify-content:space-between;
 }
-
+img {
+  width:100px;
+}
 li {
   list-style: none;
 }

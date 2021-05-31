@@ -16,7 +16,8 @@
               {{ value.data.title }}のレビューを見る
             </button>
           </li>
-          <li></li>
+          <li><p class="expla">解説</p></li>
+          <li>{{value.data.text}}</li>
           <li class="point">
             平均点:<span :class="averageColor(value.average)">{{
               value.average
@@ -109,6 +110,7 @@ export default {
         "https://intense-falls-67346.herokuapp.com/api"
       );
       this.shares = sharesdata.data.data;
+      console.log(this.shares);
     },
     async getUserReview() {
       let data = [];
@@ -135,6 +137,13 @@ span {
 .main {
   width:100%;
 }
+.expla {
+  font-size: 15px;
+  padding:5px 10px;
+  color:white;
+  background-color: gray;
+  display: inline-block;
+}
 button {
   box-shadow: 1px 1px 3px;
   font-size: 18px;
@@ -148,6 +157,7 @@ button {
 button:hover {
   background-color: rgb(0, 102, 204);
   color: #f0f0f0;
+  cursor: pointer;
 }
 li {
   font-size: 18px;
@@ -179,9 +189,13 @@ li {
 }
 h1 {
   text-align: center;
+  font-weight:400;
   padding: 50px 0;
   font-size: 30px;
   color: #414b5b;
+font-size: 2rem;
+  font-style: italic;
+  letter-spacing: .1em;
 }
 
 .login {

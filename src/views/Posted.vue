@@ -10,6 +10,7 @@
    })">編集する</button>
 <button class="delete" @click="del(id)">削除する</button>
   </div>
+  <a class="back-button" @click="$router.push('/')">戻る</a>
   </article>
  </div>
 </template>
@@ -25,6 +26,7 @@ export default{
   },
   methods:{
     del(index){
+      if(confirm('本当に削除しますか?'))
     axios({
       method:"delete",
       url:"https://intense-falls-67346.herokuapp.com/api/review/delete",
@@ -74,25 +76,36 @@ article{
 .like {
   padding-bottom:5px;
 }
+
+.back-button:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}
+
 button {
   border-radius: 2px;
   display: block;
   background-color: #fff;
   border:1px solid;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   padding:5px 20px;
   opacity:0.4;
   margin-bottom:10px;
 }
 button:hover{
 opacity:1;
+cursor:pointer;
 }
 p{
   font-size:24px;
   margin-bottom: 30px;
 }
 .delete{
-  color:red
+  color:red;
+  margin-bottom:20px;
+}
+a {
+ font-size: 20px;
 }
 </style>

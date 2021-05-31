@@ -105,6 +105,21 @@ select {
   font-size: 18px;
 }
 button {
+  box-shadow: 1px 1px 3px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid;
+  padding: 5px 10px;
+  border: 1px solid rgb(182, 182, 182);
+  border-radius: 3px;
+}
+button:hover {
+  background-color: rgb(0, 102, 204);
+  cursor: pointer;
+  color: #f0f0f0;
+}
+/* button {
   border-radius: 2px;
   display: block;
   background-color: #fff;
@@ -118,7 +133,7 @@ button {
 button:hover {
   opacity: 1;
   cursor: pointer;
-}
+} */
 select {
   border: 1px;
   padding: 5px;
