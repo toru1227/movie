@@ -8,22 +8,21 @@
       <table>
         <tr>
           <th>ID</th>
-          <th>写真</th>
-          <th>タイトル</th>
+          <th class="title">タイトル</th>
           <th>上映開始日</th>
+          <th>解説</th>
           <th>編集</th>
           <th>削除</th>
         </tr>
-        <tr v-for="(value, index) in movies" :key="index">
 
+        <tr v-for="(value,index) in movies" :key="index">
           <td>{{ value.data.id }}</td>
           <!-- <td> <img :src="'../../../movie-api/storage/app/public/images/1.jpg'"></td> -->
-         <td><img :src="'/images/1.jpg'" alt=""></td>
-
-
+         <!-- <td><img :src="'/images/1.jpg'" alt=""></td> -->
           <!-- <img src="../../../movie-api/storage/app/public/images/1.jpg"> -->
-          <td>{{ value.data.title }}</td>
+          <td class="title">{{ value.data.title }}</td>
           <td>{{ value.data.release_date }}</td>
+          <td><button class="button1 button3" @click="read(value.data.text)">解説を見る</button></td>
           <td><button class="button1" @click="$router.push
           ({
             path:'/movie_edit/'+value.data.id,
@@ -42,6 +41,7 @@ export default {
   data() {
     return {
       movies: [],
+      show:false
     };
   },
   watch: {
@@ -50,6 +50,7 @@ export default {
     },
   },
   methods: {
+
     async getMovies() {
       const movies = await axios.get(
         "https://intense-falls-67346.herokuapp.com/api"
@@ -73,6 +74,15 @@ export default {
         router.go({ path: this.$router.currentRoute.path, force: true });
       });
     },
+    read(a){
+    alert(a);
+    },
+    open(){
+      this.show=true
+    },
+    closeModal(){
+      this.show=false
+    }
   },
   created() {
     this.getMovies();
@@ -84,6 +94,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .main {
   padding: 100px 0px;
   width:100%;
@@ -92,11 +103,11 @@ table{
   margin:0 auto;
   width:1000px;
 }
-.button-flex {
-width:1000px;
-margin:0 auto;
-display: flex;
-justify-content:space-between;
+.button-flex{
+  margin: 0 auto;
+  width:1000px;
+  display: flex;
+  justify-content: space-between;
 }
 img {
   width:100px;
@@ -133,7 +144,6 @@ th {
   display:inline-block;
   padding:10px;
   font-size: 14px;
-  margin-right:10px;
   margin-bottom: 10px;
   background-color: #fff;
   border:1px solid black;
@@ -145,7 +155,8 @@ th {
   opacity:1;
 }
  .button1,
- .button2{
+ .button2,
+ .button3{
   cursor: pointer;
   border-radius: 2px;
   padding:5px 10px;
@@ -154,10 +165,12 @@ th {
   opacity:0.5;
 }
 .button1:hover,
-.button2:hover {
+.button2:hover,
+.button3:hover{
   opacity: 1;
 }
 .button2 {
   color:red;
 }
+
 </style>

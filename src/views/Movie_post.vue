@@ -9,9 +9,9 @@
       <input type="text" v-model="release_date" />
       <p>あらすじ</p>
       <textarea name="text" v-model="text"></textarea>
-      <p>画像</p>
-   <input type="file" name="picture" @change="selectedFile">
-    <div class="send"><button @click="errorCheck()">投稿する</button></div>
+   <!-- <p>画像</p>
+   <input type="file" name="picture" @change="selectedFile"> -->
+ <div class="send"><button @click="errorCheck()">投稿する</button></div>
       <div>
         <p class="button" @click="$router.push('/master_main')">戻る</p>
       </div>

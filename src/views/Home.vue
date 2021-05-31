@@ -40,9 +40,9 @@
               <button class="login" @click="$router.push('/login')">
                 ログインしてレビューを投稿する
               </button>
-              <button class="signup" @click="$router.push('/signup')">
+              <!-- <button class="signup" @click="$router.push('/signup')">
                 ユーザー登録してレビューを投稿する
-              </button>
+              </button> -->
             </div>
           </li>
         </ul>
