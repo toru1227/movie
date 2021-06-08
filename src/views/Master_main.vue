@@ -16,10 +16,8 @@
         </tr>
 
         <tr v-for="(value,index) in movies" :key="index">
-          <td>{{ value.data.id }}</td>
-          <!-- <td> <img :src="'../../../movie-api/storage/app/public/images/1.jpg'"></td> -->
-         <!-- <td><img :src="'/images/1.jpg'" alt=""></td> -->
-          <!-- <img src="../../../movie-api/storage/app/public/images/1.jpg"> -->
+        <td>{{ value.data.id }}</td>
+      
           <td class="title">{{ value.data.title }}</td>
           <td>{{ value.data.release_date }}</td>
           <td><button class="button1 button3" @click="read(value.data.text)">解説を見る</button></td>
@@ -50,7 +48,6 @@ export default {
     },
   },
   methods: {
-
     async getMovies() {
       const movies = await axios.get(
         "https://intense-falls-67346.herokuapp.com/api"
@@ -109,9 +106,7 @@ table{
   display: flex;
   justify-content: space-between;
 }
-img {
-  width:100px;
-}
+
 li {
   list-style: none;
 }
@@ -138,6 +133,9 @@ th {
 }
 th {
   background: #f0e6cc;
+}
+img {
+  width:100%;
 }
 .button {
   cursor: pointer;

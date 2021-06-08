@@ -1,6 +1,8 @@
 <template>
   <div>
     <div class="form">
+      <p>{{this.user_id}}</p>
+      <p>{{this.$store.state.user.id}}</p>
       <p class="error">{{this.error}}</p>
      <p >:レビュー</p>
     <textarea name="review" id="" cols="30" rows="10" v-model="content"></textarea>
@@ -30,7 +32,8 @@ export default {
       error:"",
       content:"",
       point:"",
-      length:""
+      length:"",
+      user_id:""
   }
   },
   methods:{
@@ -40,7 +43,12 @@ export default {
      data.push(review.data.data);
      this.content=data[0].content;
      this.point=data[0].point;
-
+     this.user_id=review.data.data.user_id;
+    },
+    user(){
+      if(this.user_id!==this.$store.state.user.id){
+        router.push('/');
+      }
     },
     send(){
       if(this.content.length<10 ||this.content==""){
@@ -58,6 +66,7 @@ export default {
   },
   created(){
     this.getReview();
+    this.user();
   },
 
 };

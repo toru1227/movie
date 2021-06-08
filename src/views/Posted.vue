@@ -21,10 +21,24 @@ export default{
   props:["id"],
   data(){
     return{
-      review_id:this.id
+      review_id:this.id,
+      user_id:'',
     }
   },
   methods:{
+      async getReview(){
+      let data=[];
+     const review = await axios.get("https://intense-falls-67346.herokuapp.com/api/edit?id="+this.id)
+     data.push(review.data.data);
+     this.content=data[0].content;
+     this.point=data[0].point;
+     this.user_id=review.data.data.user_id;
+    },
+    user(){
+      if(this.user_id!==this.$store.state.user.id){
+        router.push('/');
+      }
+    },
     del(index){
       if(confirm('本当に削除しますか?'))
     axios({
@@ -38,6 +52,10 @@ export default{
     });
   }
 },
+  created(){
+    this.getReview();
+    this.user();
+  },
 }
 </script>
 <style scoped>
