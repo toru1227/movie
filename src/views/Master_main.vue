@@ -13,7 +13,6 @@
           <th>解説</th>
           <th>編集</th>
           <th>削除</th>
-          <th>テスト</th>
         </tr>
 
         <tr v-for="(value,index) in movies" :key="index">
