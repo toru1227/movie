@@ -13,11 +13,12 @@
           <th>解説</th>
           <th>編集</th>
           <th>削除</th>
+          <th>テスト</th>
         </tr>
 
         <tr v-for="(value,index) in movies" :key="index">
         <td>{{ value.data.id }}</td>
-      
+
           <td class="title">{{ value.data.title }}</td>
           <td>{{ value.data.release_date }}</td>
           <td><button class="button1 button3" @click="read(value.data.text)">解説を見る</button></td>
